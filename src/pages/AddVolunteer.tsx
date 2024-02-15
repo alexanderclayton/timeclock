@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { randomSix } from "../helpers";
 import { addDocument } from "../firebase";
+import { TVolunteer } from "../types";
 
 export const AddVolunteer = () => {
   const [volunteer, setVolunteer] = useState<TVolunteer>({
@@ -10,7 +11,7 @@ export const AddVolunteer = () => {
     volunteerEmail: "",
     volunteerPhone: "",
     volunteerClockedIn: false,
-    punchId: ""
+    punchId: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
