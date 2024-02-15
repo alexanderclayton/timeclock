@@ -1,8 +1,8 @@
 //import//
 import { useState } from "react";
-import { AddVolunteer, Home } from "./pages";
 import { Header } from "./components";
 import { ETabs } from "./types";
+import { AddVolunteer, Home, Timesheets } from "./pages";
 
 function App() {
   const [tab, setTab] = useState<ETabs>(ETabs.Home);
@@ -11,6 +11,7 @@ function App() {
       <Header setTabs={setTab} />
       <main>
         {tab === "Home" && <Home />}
+        {tab === "Timesheet" && <Timesheets />}
         {tab === "Settings" && <AddVolunteer />}
       </main>
     </>

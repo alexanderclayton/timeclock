@@ -1,7 +1,6 @@
-import { doc, updateDoc, getDoc, WithFieldValue, DocumentData, setDoc } from "firebase/firestore";
+import { doc, collection, updateDoc, getDoc, getDocs, WithFieldValue, DocumentData, setDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import { FirebaseError } from "firebase/app";
-
 export const addDocument = async<T extends WithFieldValue<DocumentData>>(
     collectionName: string,
     documentName: string,
@@ -77,4 +76,16 @@ export const getDocument = async (
             console.error("Unknown error:", error)
         }
     }
+}
+
+export const getDocuments = async<T>(
+    collectionName: string,
+    setDocuments: React.Dispatch<React.SetStateAction<T[] | undefined>>
+) => {
+    let volunteerArray: T[] = []
+    const querySnapshot = await getDocs(collection(db, collectionName))
+    querySnapshot.forEach((doc) => {
+        volunteerArray.push(doc.data() as T)
+    })
+    setDocuments(volunteerArray)
 }
