@@ -3,7 +3,7 @@ import { useState } from "react";
 export const Home = () => {
   const [id, setId] = useState("");
 
-  const formSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const formSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(id);
   };

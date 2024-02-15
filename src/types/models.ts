@@ -3,7 +3,7 @@ type TVolunteer = {
     volunteerFirstName: string
     volunteerLastName: string
     volunteerEmail: string
-    volunteerPhone: number
+    volunteerPhone: string
     volunteerClockedIn: boolean
 }
 
