@@ -1,14 +1,19 @@
 //import//
-
-import { AddVolunteer } from "./pages/AddVolunteer";
-import { Home } from "./pages/Home";
+import { useState } from "react";
+import { Header } from "./components";
+import { ETabs } from "./types";
+import { AddVolunteer, Home, Timesheets } from "./pages";
 
 function App() {
+  const [tab, setTab] = useState<ETabs>(ETabs.Home);
   return (
     <>
-      <h2 className="font-bold">Hello World!</h2>
-      <Home />
-      <AddVolunteer />
+      <Header setTabs={setTab} />
+      <main>
+        {tab === "Home" && <Home />}
+        {tab === "Timesheet" && <Timesheets />}
+        {tab === "Settings" && <AddVolunteer />}
+      </main>
     </>
   );
 }

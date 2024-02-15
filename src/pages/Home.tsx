@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { addDocument, getDocument, updateDocument } from "../firebase";
+import { TPunch, TVolunteer } from "../types";
 
 export const Home = () => {
   const [punch, setPunch] = useState<TPunch>({

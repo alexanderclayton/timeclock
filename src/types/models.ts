@@ -1,4 +1,4 @@
-type TVolunteer = {
+export type TVolunteer = {
     volunteerId: string
     volunteerFirstName: string
     volunteerLastName: string
@@ -8,7 +8,7 @@ type TVolunteer = {
     punchId: string
 }
 
-type TPunch = {
+export type TPunch = {
     volunteerId: string
     clockIn?: Date
     clockOut?: Date
