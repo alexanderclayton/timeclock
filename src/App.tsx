@@ -1,5 +1,6 @@
 //import//
 
+import { AddVolunteer } from "./pages/AddVolunteer";
 import { Home } from "./pages/Home";
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <>
       <h2 className="font-bold">Hello World!</h2>
       <Home />
+      <AddVolunteer />
     </>
   );
 }

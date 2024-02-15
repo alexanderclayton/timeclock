@@ -1,11 +1,47 @@
 import { useState } from "react";
+import { addDocument, getDocument, updateDocument } from "../firebase";
 
 export const Home = () => {
-  const [id, setId] = useState("");
+  const [punch, setPunch] = useState<TPunch>({
+    volunteerId: "",
+  });
 
-  const formSubmit = (e: React.FormEvent) => {
+  const formSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(id);
+    try {
+      const volunteerData = await getDocument("volunteers", punch.volunteerId);
+      const punchId = new Date().toISOString();
+      if (volunteerData) {
+        if (volunteerData.volunteerClockedIn === false) {
+          addDocument("punches", punchId, {
+            ...punch,
+            clockIn: new Date(),
+          });
+          updateDocument<TVolunteer>(
+            "volunteers",
+            punch.volunteerId,
+            "volunteerClockedIn",
+            true,
+            punchId,
+          );
+        } else {
+          updateDocument<TPunch>(
+            "punches",
+            volunteerData.punchId,
+            "clockOut",
+            new Date(),
+          );
+          updateDocument<TVolunteer>(
+            "volunteers",
+            punch.volunteerId,
+            "volunteerClockedIn",
+            false,
+          );
+        }
+      }
+    } catch (error: unknown) {
+      console.error("Unknown submit error", error);
+    }
   };
 
   return (
@@ -15,8 +51,13 @@ export const Home = () => {
         <input
           type="text"
           id="volunteerId"
-          onChange={(e) => setId(e.target.value)}
-          value={id}
+          onChange={(e) =>
+            setPunch((prevPunch) => ({
+              ...prevPunch,
+              volunteerId: e.target.value,
+            }))
+          }
+          value={punch.volunteerId}
         />
         <input type="submit" value="submit" />
       </form>
