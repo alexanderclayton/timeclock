@@ -1,4 +1,4 @@
-import { doc, collection, updateDoc, getDoc, getDocs, WithFieldValue, DocumentData, setDoc } from "firebase/firestore";
+import { doc, collection, query, where, updateDoc, getDoc, getDocs, WithFieldValue, DocumentData, setDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import { FirebaseError } from "firebase/app";
 export const addDocument = async<T extends WithFieldValue<DocumentData>>(
@@ -68,7 +68,6 @@ export const getDocument = async (
             console.log("No document")
             return null
         }
-        return docSnap.data()
     } catch (error: unknown) {
         if (error instanceof FirebaseError) {
             console.error("Firebase Error:", error.message)
@@ -88,4 +87,19 @@ export const getDocuments = async<T>(
         volunteerArray.push(doc.data() as T)
     })
     setDocuments(volunteerArray)
+}
+
+export const queryDocuments = async<T>(
+    collectionName: string,
+    queryField: keyof T,
+    fieldValue: string
+) => {
+    const queryRef = collection(db, collectionName)
+    const q = query(queryRef, where(queryField as string, "==", fieldValue))
+    let documentArray: T[] = []
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+        documentArray.push(doc.data() as T)
+    })
+    return documentArray
 }

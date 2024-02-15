@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { TVolunteer } from "../types";
 import { getDocuments } from "../firebase";
+import { Shifts } from "../components/Shifts";
 
 export const Timesheets = () => {
   const [allVolunteers, setAllVolunteers] = useState<TVolunteer[] | undefined>(
@@ -20,6 +21,7 @@ export const Timesheets = () => {
           {volunteer.volunteerEmail}
           {volunteer.volunteerPhone}
           {volunteer.volunteerId}
+          <Shifts volunteerId={volunteer.volunteerId} />
         </div>
       ))}
     </div>
