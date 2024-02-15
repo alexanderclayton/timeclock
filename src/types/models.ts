@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore"
+
 export type TVolunteer = {
     volunteerId: string
     volunteerFirstName: string
@@ -10,6 +12,6 @@ export type TVolunteer = {
 
 export type TPunch = {
     volunteerId: string
-    clockIn?: Date
-    clockOut?: Date
+    clockIn?: Date | Timestamp
+    clockOut?: Date | Timestamp
 }
