@@ -1,14 +1,15 @@
-import { doc, collection, addDoc, updateDoc, getDoc, WithFieldValue, DocumentData } from "firebase/firestore";
+import { doc, updateDoc, getDoc, WithFieldValue, DocumentData, setDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import { FirebaseError } from "firebase/app";
 
 export const addDocument = async<T extends WithFieldValue<DocumentData>>(
     collectionName: string,
+    documentName: string,
     data: T
 ) => {
     try {
-        const docRef = await addDoc(collection(db, collectionName), data)
-        console.log(`Added ${docRef.id} to the ${collectionName} collection`)
+        await setDoc(doc(db, collectionName, documentName), data)
+        console.log(`Added ${documentName} to the ${collectionName} collection`)
     } catch (error: unknown) {
         if (error instanceof FirebaseError) {
             console.error("Firebase Error:", error.message)
@@ -22,7 +23,8 @@ export const updateDocument = async<T>(
     collectionName: string,
     documentName: string,
     updateField: keyof T,
-    fieldValue: Date | boolean
+    fieldValue: Date | boolean,
+    punchIdValue?: string,
 ) => {
     try {
         const docRef = doc(db, collectionName, documentName)
@@ -32,9 +34,16 @@ export const updateDocument = async<T>(
             })
             console.log("Added punch")
         } else {
-            await updateDoc(docRef, {
-                [updateField]: !fieldValue
-            })
+            if (punchIdValue) {
+                await updateDoc(docRef, {
+                    [updateField]: fieldValue,
+                    punchId: punchIdValue
+                })
+            } else {
+                await updateDoc(docRef, {
+                    [updateField]: fieldValue
+                })
+            }
             console.log("clocked in/out")
         }
     } catch (error: unknown) {
@@ -55,7 +64,12 @@ export const getDocument = async (
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
             console.log("Document Data:", docSnap.data())
+            return docSnap.data()
+        } else {
+            console.log("No document")
+            return null
         }
+        return docSnap.data()
     } catch (error: unknown) {
         if (error instanceof FirebaseError) {
             console.error("Firebase Error:", error.message)
@@ -64,4 +78,3 @@ export const getDocument = async (
         }
     }
 }
-

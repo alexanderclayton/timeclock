@@ -5,10 +5,11 @@ type TVolunteer = {
     volunteerEmail: string
     volunteerPhone: string
     volunteerClockedIn: boolean
+    punchId: string
 }
 
 type TPunch = {
     volunteerId: string
-    clockIn: Date
+    clockIn?: Date
     clockOut?: Date
 }

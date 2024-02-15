@@ -10,6 +10,7 @@ export const AddVolunteer = () => {
     volunteerEmail: "",
     volunteerPhone: "",
     volunteerClockedIn: false,
+    punchId: ""
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +23,7 @@ export const AddVolunteer = () => {
 
   const addVolunteer = (e: React.FormEvent) => {
     e.preventDefault();
-    addDocument("volunteers", volunteer);
+    addDocument("volunteers", volunteer.volunteerId, volunteer);
   };
   return (
     <form onSubmit={addVolunteer} className="flex flex-col">
