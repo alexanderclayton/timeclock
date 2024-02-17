@@ -6,6 +6,7 @@ export const Home = () => {
   const [punch, setPunch] = useState<TPunch>({
     volunteerId: "",
   });
+  const [error, setError] = useState("");
 
   const formSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +40,8 @@ export const Home = () => {
             false,
           );
         }
+      } else {
+        setError("Please enter a valid ID");
       }
     } catch (error: unknown) {
       console.error("Unknown submit error", error);
@@ -62,6 +65,7 @@ export const Home = () => {
         />
         <input type="submit" value="submit" />
       </form>
+      {error !== "" && <p className="text-red-500">{error}</p>}
     </div>
   );
 };
