@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { TPunch } from "../types";
 import { getDocument, queryDocuments } from "../firebase";
-import { Timestamp } from "firebase/firestore";
+import { ShiftCard } from "./ShiftCard";
 
 interface IShiftsProps {
   volunteerId: string;
@@ -28,31 +28,12 @@ export const Shifts = ({ volunteerId }: IShiftsProps) => {
     }
   };
 
-  const getShiftDate = (shift: Date | Timestamp | undefined) => {
-    if (shift instanceof Date) {
-      return shift.toDateString();
-    } else if (shift instanceof Timestamp) {
-      return shift.toDate().toDateString();
-    } else {
-      return "No Date Provided";
-    }
-  };
-
-  const calculateHours = (a: any, b: any) => {
-    return ((b - a) / 60).toString();
-  };
-
   useEffect(() => {
     fetchData();
   }, []);
   return (
     <div>
-      {shifts?.map((shift, idx) => (
-        <div key={idx} className="flex flex-col">
-          <p>Date: {getShiftDate(shift.clockIn)}</p>
-          <p>Total: {calculateHours(shift.clockIn, shift.clockOut)}</p>
-        </div>
-      ))}
+      {shifts?.map((shift, idx) => <ShiftCard key={idx} shift={shift} />)}
     </div>
   );
 };

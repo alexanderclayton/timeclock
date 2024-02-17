@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { TVolunteer } from "../types";
 import { getDocuments } from "../firebase";
 import { Shifts } from "../components/Shifts";
+import { TimesheetCard } from "../components/TimesheetCard";
 
 export const Timesheets = () => {
   const [allVolunteers, setAllVolunteers] = useState<TVolunteer[] | undefined>(
     undefined,
   );
+  const [shiftId, setShiftId] = useState("");
 
   useEffect(() => {
     getDocuments("volunteers", setAllVolunteers);
@@ -15,15 +17,13 @@ export const Timesheets = () => {
   return (
     <div>
       {allVolunteers?.map((volunteer, idx) => (
-        <div key={idx}>
-          {volunteer.volunteerFirstName}
-          {volunteer.volunteerLastName}
-          {volunteer.volunteerEmail}
-          {volunteer.volunteerPhone}
-          {volunteer.volunteerId}
-          <Shifts volunteerId={volunteer.volunteerId} />
-        </div>
+        <TimesheetCard
+          key={idx}
+          volunteer={volunteer}
+          setShiftId={setShiftId}
+        />
       ))}
+      {shiftId !== "" && <Shifts volunteerId={shiftId} />}
     </div>
   );
 };
