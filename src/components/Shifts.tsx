@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { TPunch } from "../types";
 import { getDocument, queryDocuments } from "../firebase";
-import { ShiftCard } from "./ShiftCard";
+import { ShiftCard } from ".";
 
 interface IShiftsProps {
   volunteerId: string;
