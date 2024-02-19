@@ -49,7 +49,7 @@ export const Home = () => {
   };
 
   return (
-    <div>
+    <div className="flex h-full items-center justify-center rounded-xl bg-blue-500">
       <form onSubmit={formSubmit}>
         <label htmlFor="volunteerId">ID:</label>
         <input
