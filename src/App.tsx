@@ -7,14 +7,14 @@ import { AddVolunteer, Home, Timesheets } from "./pages";
 function App() {
   const [tab, setTab] = useState<ETabs>(ETabs.Home);
   return (
-    <>
-      <Header setTabs={setTab} />
-      <main>
+    <div className="flex h-screen flex-col">
+      <Header tabs={tab} setTabs={setTab} />
+      <main className="flex-1">
         {tab === "Home" && <Home />}
         {tab === "Timesheet" && <Timesheets />}
         {tab === "Settings" && <AddVolunteer />}
       </main>
-    </>
+    </div>
   );
 }
 
