@@ -31,16 +31,18 @@ export const AddVolunteer = () => {
     addDocument("volunteers", volunteer.volunteerId, volunteer);
   };
   return (
-    <div>
-      <VolunteerForm
-        legend="Add Volunteer"
-        formSubmit={addVolunteer}
-        formChange={handleChange}
-        volunteer={volunteer}
-        submit="Add!"
-      />
-      <AllVolunteers setUpdateVolunteer={setUpdateVolunteer} />
-      <UpdateVolunteer updateVolunteer={updateVolunteer} />
+    <div className="h-full w-full rounded-3xl bg-purple-900 p-4">
+      <div className="flex h-full w-full items-center justify-center rounded-2xl bg-gray-100">
+        <VolunteerForm
+          legend="Add Volunteer"
+          formSubmit={addVolunteer}
+          formChange={handleChange}
+          volunteer={volunteer}
+          submit="Add!"
+        />
+        <AllVolunteers setUpdateVolunteer={setUpdateVolunteer} />
+        <UpdateVolunteer updateVolunteer={updateVolunteer} />
+      </div>
     </div>
   );
 };

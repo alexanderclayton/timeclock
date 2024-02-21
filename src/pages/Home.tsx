@@ -49,23 +49,25 @@ export const Home = () => {
   };
 
   return (
-    <div className="flex h-full items-center justify-center rounded-xl bg-blue-500">
-      <form onSubmit={formSubmit}>
-        <label htmlFor="volunteerId">ID:</label>
-        <input
-          type="text"
-          id="volunteerId"
-          onChange={(e) =>
-            setPunch((prevPunch) => ({
-              ...prevPunch,
-              volunteerId: e.target.value,
-            }))
-          }
-          value={punch.volunteerId}
-        />
-        <input type="submit" value="submit" />
-      </form>
-      {error !== "" && <p className="text-red-500">{error}</p>}
+    <div className="h-full rounded-3xl bg-green-600 p-4">
+      <div className="flex h-full w-full items-center justify-center rounded-2xl bg-gray-100">
+        <form onSubmit={formSubmit}>
+          <label htmlFor="volunteerId">ID:</label>
+          <input
+            type="text"
+            id="volunteerId"
+            onChange={(e) =>
+              setPunch((prevPunch) => ({
+                ...prevPunch,
+                volunteerId: e.target.value,
+              }))
+            }
+            value={punch.volunteerId}
+          />
+          <input type="submit" value="submit" />
+        </form>
+        {error !== "" && <p className="text-red-500">{error}</p>}
+      </div>
     </div>
   );
 };

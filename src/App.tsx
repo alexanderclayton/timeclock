@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="flex h-screen flex-col">
       <Header tabs={tab} setTabs={setTab} />
-      <main className="flex-1">
+      <main className="mx-4 mb-4 flex-1">
         {tab === "Home" && <Home />}
         {tab === "Timesheet" && <Timesheets />}
         {tab === "Settings" && <AddVolunteer />}
