@@ -1,20 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TVolunteer } from "../types";
-import { Shifts } from "../components/Shifts";
-import { TimesheetCard } from "../components/TimesheetCard";
-import { getDocument, getDocuments } from "../firebase";
+import { getDocument } from "../firebase";
 import { DocumentData } from "firebase/firestore";
 import { VolunteerTimesheet } from "../components/VolunteerTimesheet";
 import { VolunteerIDForm } from "../components/VolunteerIDForm";
+import { AdminTimesheet } from "../components/AdminTimesheet";
 
 export const Timesheets = () => {
   const [volunteerId, setVolunteerId] = useState("");
   const [error, setError] = useState("");
   const [volunteer, setVolunteer] = useState<TVolunteer | undefined>(undefined);
-  const [allVolunteers, setAllVolunteers] = useState<TVolunteer[] | undefined>(
-    undefined,
-  );
-  const [shiftId, setShiftId] = useState("");
 
   const mapVolunteer = (data: DocumentData) => {
     setVolunteer({
@@ -43,12 +38,6 @@ export const Timesheets = () => {
     }
   };
 
-  useEffect(() => {
-    if (volunteer && volunteer.admin) {
-      getDocuments("volunteers", setAllVolunteers);
-    }
-  }, [volunteer]);
-
   return (
     <div className="h-full w-full rounded-3xl bg-amber-400 p-4">
       <div className="flex h-full w-full items-center justify-center rounded-2xl bg-gray-100">
@@ -66,18 +55,7 @@ export const Timesheets = () => {
         {volunteer && !volunteer.admin && (
           <VolunteerTimesheet volunteer={volunteer} />
         )}
-        {volunteer && volunteer.admin && allVolunteers && (
-          <div>
-            {allVolunteers.map((volunteer, idx) => (
-              <TimesheetCard
-                key={idx}
-                volunteer={volunteer}
-                setShiftId={setShiftId}
-              />
-            ))}
-            {shiftId !== "" && <Shifts volunteerId={shiftId} />}
-          </div>
-        )}
+        {volunteer && volunteer.admin && <AdminTimesheet />}
       </div>
     </div>
   );

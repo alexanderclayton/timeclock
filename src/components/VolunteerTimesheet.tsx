@@ -1,24 +1,43 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TPunch, TVolunteer } from "../types";
 import { VolunteerPunches } from "./VolunteerPunches";
-import { getDocuments } from "../firebase";
+import { queryDocuments } from "../firebase";
 
 interface IVolunteerTimesheetProps {
   volunteer: TVolunteer;
+  toggleBack?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const VolunteerTimesheet = ({ volunteer }: IVolunteerTimesheetProps) => {
+export const VolunteerTimesheet = ({
+  volunteer,
+  toggleBack,
+}: IVolunteerTimesheetProps) => {
   const [allPunches, setAllPunches] = useState<TPunch[] | undefined>(undefined);
   const [totalHours, setTotalHours] = useState("");
 
+  const fetchPunches = async () => {
+    const volunteerPunches = await queryDocuments(
+      "punches",
+      "volunteerId",
+      volunteer.volunteerId,
+    );
+    if (volunteerPunches) {
+      setAllPunches(volunteerPunches);
+    } else {
+      console.log("cannot fetch punches");
+    }
+  };
+
   useEffect(() => {
     if (volunteer) {
-      getDocuments("punches", setAllPunches);
+      fetchPunches();
     }
   }, [volunteer]);
 
   return (
     <div className="flex w-4/5 flex-col">
+      {toggleBack && <button onClick={() => toggleBack(false)}>Back</button>}
+
       <h2 className="text-3xl font-bold">
         {volunteer.volunteerFirstName} {volunteer.volunteerLastName} -{" "}
         {volunteer.volunteerId}
