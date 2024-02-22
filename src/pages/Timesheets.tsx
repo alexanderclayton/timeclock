@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { TPunch, TVolunteer } from "../types";
+import { TVolunteer } from "../types";
 import { Shifts } from "../components/Shifts";
 import { TimesheetCard } from "../components/TimesheetCard";
 import { getDocument, getDocuments } from "../firebase";
 import { DocumentData } from "firebase/firestore";
-import { VolunteerPunches } from "../components/VolunteerPunches";
+import { VolunteerTimesheet } from "../components/VolunteerTimesheet";
+import { VolunteerIDForm } from "../components/VolunteerIDForm";
 
 export const Timesheets = () => {
   const [volunteerId, setVolunteerId] = useState("");
@@ -13,7 +14,6 @@ export const Timesheets = () => {
   const [allVolunteers, setAllVolunteers] = useState<TVolunteer[] | undefined>(
     undefined,
   );
-  const [allPunches, setAllPunches] = useState<TPunch[] | undefined>(undefined);
   const [shiftId, setShiftId] = useState("");
 
   const mapVolunteer = (data: DocumentData) => {
@@ -49,47 +49,22 @@ export const Timesheets = () => {
     }
   }, [volunteer]);
 
-  useEffect(() => {
-    if (volunteer) {
-      getDocuments("punches", setAllPunches);
-    }
-  }, [volunteer]);
-
   return (
     <div className="h-full w-full rounded-3xl bg-amber-400 p-4">
       <div className="flex h-full w-full items-center justify-center rounded-2xl bg-gray-100">
         {!volunteer && (
           <div>
-            <form onSubmit={formSubmit} className="w-full max-w-sm">
-              <div className="mb-4">
-                <input
-                  type="text"
-                  id="volunteerId"
-                  placeholder="Volunteer ID"
-                  onChange={(e) => setVolunteerId(e.target.value)}
-                  value={volunteerId}
-                  className="mt-1 block w-full rounded-md border-gray-300 p-2 text-center shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                />
-              </div>
-              <div className="mb-6">
-                <input
-                  type="submit"
-                  value="View Timesheet"
-                  className="w-full rounded-md bg-indigo-500 p-2 font-semibold text-white hover:cursor-pointer hover:bg-indigo-600"
-                />
-              </div>
-            </form>
+            <VolunteerIDForm
+              formSubmit={formSubmit}
+              id={volunteerId}
+              formChange={(e) => setVolunteerId(e.target.value)}
+              submit="View Timesheet"
+            />
             <p className={`h-8 text-xl ${error && "text-red-500"}`}>{error}</p>
           </div>
         )}
         {volunteer && !volunteer.admin && (
-          <div className="flex flex-col">
-            <h2 className="text-3xl">
-              {volunteer.volunteerFirstName} {volunteer.volunteerLastName} -{" "}
-              {volunteer.volunteerId}
-            </h2>
-            {allPunches && <VolunteerPunches allPunches={allPunches} />}
-          </div>
+          <VolunteerTimesheet volunteer={volunteer} />
         )}
         {volunteer && volunteer.admin && allVolunteers && (
           <div>
