@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { addDocument, getDocument, updateDocument } from "../firebase";
 import { TPunch, TVolunteer } from "../types";
+import { VolunteerIDForm } from "../components/VolunteerIDForm";
 
 enum EMessageType {
   error = "error",
@@ -13,6 +14,7 @@ export const Home = () => {
   });
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [time, setTime] = useState("");
 
   const formSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,33 +79,34 @@ export const Home = () => {
     }, 5000);
   };
 
+  const formChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPunch((prevPunch) => ({
+      ...prevPunch,
+      volunteerId: e.target.value,
+    }));
+  };
+
+  const updateTime = () => {
+    const currentTime = new Date();
+    const hours = currentTime.getHours();
+    const minutes = currentTime.getMinutes();
+    const seconds = currentTime.getSeconds();
+    const now = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    setTime(now);
+  };
+
+  setInterval(updateTime, 1000);
+
   return (
-    <div className="h-full rounded-3xl bg-green-600 p-4">
-      <div className="flex h-full w-full flex-col items-center justify-center rounded-2xl bg-gray-100 p-8">
-        <form onSubmit={formSubmit} className="w-full max-w-sm">
-          <div className="mb-4">
-            <input
-              type="text"
-              id="volunteerId"
-              placeholder="Volunteer ID"
-              onChange={(e) =>
-                setPunch((prevPunch) => ({
-                  ...prevPunch,
-                  volunteerId: e.target.value,
-                }))
-              }
-              value={punch.volunteerId}
-              className="mt-1 block w-full rounded-md border-gray-300 p-2 text-center shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            />
-          </div>
-          <div className="mb-6">
-            <input
-              type="submit"
-              value="Clock In"
-              className="w-full rounded-md bg-indigo-500 p-2 font-semibold text-white hover:cursor-pointer hover:bg-indigo-600"
-            />
-          </div>
-        </form>
+    <div className="flex h-full rounded-3xl bg-green-600 p-4">
+      <div className="flex h-full w-full flex-col items-center justify-around rounded-2xl bg-gray-100 p-8">
+        <h1 className="text-6xl">{time}</h1>
+        <VolunteerIDForm
+          formSubmit={formSubmit}
+          id={punch.volunteerId}
+          formChange={formChange}
+          submit="Submit Punch"
+        />
         <p
           className={`h-8 text-xl ${error ? "text-red-500" : "text-green-600"}`}
         >
