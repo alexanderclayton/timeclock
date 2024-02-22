@@ -6,7 +6,8 @@ export type TVolunteer = {
     volunteerLastName: string
     volunteerEmail: string
     volunteerPhone: string
-    volunteerClockedIn: boolean
+    admin: boolean
+    clockedIn: boolean
     punchId: string
 }
 

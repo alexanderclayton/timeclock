@@ -10,7 +10,10 @@ export const Header = ({ tabs, setTabs }: IHeaderProps) => {
   return (
     <header className="flex justify-between px-8 pt-4">
       <div>
-        <p className="ml-4 pb-4 text-2xl font-bold text-blue-500">L.I.N.K.</p>
+        <p className="ml-4 pb-4 text-2xl font-bold text-blue-500">
+          L.I.N.K.{" "}
+          <span className="font-extralight text-red-800">Volunteers</span>
+        </p>
       </div>
       <nav className="mr-4 flex w-2/5">
         <button

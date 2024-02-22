@@ -5,6 +5,7 @@ import { TVolunteer } from "../types";
 import { VolunteerForm } from "../components";
 import { AllVolunteers } from "../components/AllVolunteers";
 import { UpdateVolunteer } from "../components/UpdateVolunteer";
+// import { DeleteDocuments } from "../components/DeleteDocuments";
 
 export const AddVolunteer = () => {
   const [volunteer, setVolunteer] = useState<TVolunteer>({
@@ -13,7 +14,8 @@ export const AddVolunteer = () => {
     volunteerLastName: "",
     volunteerEmail: "",
     volunteerPhone: "",
-    volunteerClockedIn: false,
+    admin: false,
+    clockedIn: false,
     punchId: "",
   });
   const [updateVolunteer, setUpdateVolunteer] = useState("");
@@ -30,6 +32,7 @@ export const AddVolunteer = () => {
     e.preventDefault();
     addDocument("volunteers", volunteer.volunteerId, volunteer);
   };
+
   return (
     <div className="h-full w-full rounded-3xl bg-purple-900 p-4">
       <div className="flex h-full w-full items-center justify-center rounded-2xl bg-gray-100">
@@ -42,6 +45,7 @@ export const AddVolunteer = () => {
         />
         <AllVolunteers setUpdateVolunteer={setUpdateVolunteer} />
         <UpdateVolunteer updateVolunteer={updateVolunteer} />
+        {/* <DeleteDocuments /> */}
       </div>
     </div>
   );
