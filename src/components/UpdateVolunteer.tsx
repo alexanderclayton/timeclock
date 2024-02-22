@@ -18,7 +18,8 @@ export const UpdateVolunteer = ({ updateVolunteer }: IUpdateVolunteerProps) => {
         volunteerLastName: fetchedVolunteer.volunteerLastName,
         volunteerEmail: fetchedVolunteer.volunteerEmail,
         volunteerPhone: fetchedVolunteer.volunteerPhone,
-        volunteerClockedIn: fetchedVolunteer.volunteerClockedIn,
+        admin: fetchedVolunteer.admin,
+        clockedIn: fetchedVolunteer.clockedIn,
         punchId: fetchedVolunteer.punchId,
       });
     } else {
@@ -35,10 +36,9 @@ export const UpdateVolunteer = ({ updateVolunteer }: IUpdateVolunteerProps) => {
     <>
       {volunteer && (
         <div className="bg-green-100">
-          {volunteer.punchId} {volunteer.volunteerClockedIn}{" "}
-          {volunteer.volunteerEmail} {volunteer.volunteerFirstName}{" "}
-          {volunteer.volunteerId} {volunteer.volunteerLastName}{" "}
-          {volunteer.volunteerPhone}
+          {volunteer.punchId} {volunteer.clockedIn} {volunteer.volunteerEmail}{" "}
+          {volunteer.volunteerFirstName} {volunteer.volunteerId}{" "}
+          {volunteer.volunteerLastName} {volunteer.volunteerPhone}
         </div>
       )}
     </>
