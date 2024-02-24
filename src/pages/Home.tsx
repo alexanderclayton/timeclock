@@ -88,10 +88,18 @@ export const Home = () => {
 
   const updateTime = () => {
     const currentTime = new Date();
-    const hours = currentTime.getHours();
+    let aM;
+    let hours = currentTime.getHours();
+    if (hours > 12) {
+      hours = hours - 12;
+      aM = "PM";
+    } else {
+      hours = hours;
+      aM = "AM";
+    }
     const minutes = currentTime.getMinutes();
     const seconds = currentTime.getSeconds();
-    const now = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    const now = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")} ${aM}`;
     setTime(now);
   };
 
