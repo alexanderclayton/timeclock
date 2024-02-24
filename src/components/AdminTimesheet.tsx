@@ -37,7 +37,7 @@ export const AdminTimesheet = () => {
   };
 
   const fetchVolunteer = async (volunteerId: string) => {
-    const fetchedVolunteer = await getDocument("volunteers", volunteerId);
+    const fetchedVolunteer = await getDocument<TVolunteer>("volunteers", volunteerId);
     if (fetchedVolunteer) {
       mapVolunteer(fetchedVolunteer, setAdminVolunteer);
       setViewTimesheet(true);

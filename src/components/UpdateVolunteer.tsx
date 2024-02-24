@@ -10,7 +10,7 @@ export const UpdateVolunteer = ({ updateVolunteer }: IUpdateVolunteerProps) => {
   const [volunteer, setVolunteer] = useState<TVolunteer | undefined>(undefined);
 
   const fetchVolunteer = async () => {
-    const fetchedVolunteer = await getDocument("volunteers", updateVolunteer);
+    const fetchedVolunteer = await getDocument<TVolunteer>("volunteers", updateVolunteer);
     if (fetchedVolunteer) {
       setVolunteer({
         volunteerId: fetchedVolunteer.volunteerId,
