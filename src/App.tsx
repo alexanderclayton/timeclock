@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { Header } from "./components";
 import { ETabs } from "./types";
-import { AddVolunteer, Home, Timesheets } from "./pages";
+import { Home, Timesheets } from "./pages";
+import { Settings } from "./pages/Settings";
 
 function App() {
   const [tab, setTab] = useState<ETabs>(ETabs.Home);
@@ -12,7 +13,7 @@ function App() {
       <main className="mx-4 mb-4 flex-1">
         {tab === "Home" && <Home />}
         {tab === "Timesheet" && <Timesheets />}
-        {tab === "Settings" && <AddVolunteer />}
+        {tab === "Settings" && <Settings />}
       </main>
     </div>
   );

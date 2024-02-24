@@ -54,7 +54,7 @@ export const updateDocument = async<T>(
     }
 }
 
-export const getDocument = async (
+export const getDocument = async <T>(
     collectionName: string,
     documentName: string,
 ) => {
@@ -63,7 +63,7 @@ export const getDocument = async (
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
             console.log("Document Data:", docSnap.data())
-            return docSnap.data()
+            return docSnap.data() as T
         } else {
             console.log("No document")
             return null

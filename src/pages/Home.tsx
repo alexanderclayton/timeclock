@@ -3,7 +3,7 @@ import { addDocument, getDocument, updateDocument } from "../firebase";
 import { TPunch, TVolunteer } from "../types";
 import { VolunteerIDForm } from "../components/VolunteerIDForm";
 
-enum EMessageType {
+export enum EMessageType {
   error = "error",
   message = "message",
 }
@@ -19,7 +19,10 @@ export const Home = () => {
   const formSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const volunteerData = await getDocument("volunteers", punch.volunteerId);
+      const volunteerData = await getDocument<TVolunteer>(
+        "volunteers",
+        punch.volunteerId,
+      );
       const punchId = new Date().toISOString();
       if (volunteerData) {
         if (volunteerData.clockedIn === false) {

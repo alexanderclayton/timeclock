@@ -27,7 +27,10 @@ export const Timesheets = () => {
   const formSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const volunteerData = await getDocument("volunteers", volunteerId);
+      const volunteerData = await getDocument<TVolunteer>(
+        "volunteers",
+        volunteerId,
+      );
       if (volunteerData) {
         mapVolunteer(volunteerData);
       } else {
