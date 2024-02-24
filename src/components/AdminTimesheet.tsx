@@ -69,51 +69,54 @@ export const AdminTimesheet = () => {
   return (
     <>
       {allVolunteers && !viewTimesheet && (
-        <div>
+        <div className="flex w-4/5 flex-col items-center justify-center">
           <input
             type="text"
             placeholder="Search Volunteer"
             onChange={handleSearchFilter}
+            className="w-2/5 rounded-lg border border-gray-300 px-4 py-2 transition-colors focus:border-blue-500 focus:outline-none"
           />
-          <table className="mt-4 w-full border-collapse border border-gray-200">
-            <caption className="mb-2 text-lg font-bold">Volunteers</caption>
-            <thead>
-              <tr>
-                <th className="border-b border-gray-200 bg-gray-100 px-4 py-2">
-                  Last Name
-                </th>
-                <th className="border-b border-gray-200 bg-gray-100 px-4 py-2">
-                  First Name
-                </th>
-                <th className="border-b border-gray-200 bg-gray-100 px-4 py-2">
-                  Shift
-                </th>
-              </tr>
-            </thead>
-            {filteredVolunteers && (
-              <tbody>
-                {filteredVolunteers.map((volunteer, idx) => (
-                  <tr
-                    key={idx}
-                    onClick={() => fetchVolunteer(volunteer.volunteerId)}
-                    className="border-b border-gray-200 hover:bg-blue-100"
-                  >
-                    <td className="px-6 py-3 text-center">
-                      {volunteer.volunteerLastName}
-                    </td>
-                    <td className="px-6 py-3 text-center">
-                      {volunteer.volunteerFirstName}
-                    </td>
-                    {volunteer.clockedIn ? (
-                      <td className="px-6 py-3 text-center">On shift</td>
-                    ) : (
-                      <td className="px-6 py-3 text-center">Off Shift</td>
-                    )}
-                  </tr>
-                ))}
-              </tbody>
-            )}
-          </table>
+          <div className="mt-4 h-64 w-full border-collapse overflow-y-auto border border-gray-200">
+            <table className="w-full">
+              <caption className="mb-2 text-lg font-bold">Volunteers</caption>
+              <thead>
+                <tr>
+                  <th className="border-b border-gray-200 bg-gray-100 px-4 py-2">
+                    Last Name
+                  </th>
+                  <th className="border-b border-gray-200 bg-gray-100 px-4 py-2">
+                    First Name
+                  </th>
+                  <th className="border-b border-gray-200 bg-gray-100 px-4 py-2">
+                    Shift
+                  </th>
+                </tr>
+              </thead>
+              {filteredVolunteers && (
+                <tbody>
+                  {filteredVolunteers.map((volunteer, idx) => (
+                    <tr
+                      key={idx}
+                      onClick={() => fetchVolunteer(volunteer.volunteerId)}
+                      className="cursor-pointer border-b border-gray-200 transition-colors hover:bg-blue-100"
+                    >
+                      <td className="px-6 py-3 text-center">
+                        {volunteer.volunteerLastName}
+                      </td>
+                      <td className="px-6 py-3 text-center">
+                        {volunteer.volunteerFirstName}
+                      </td>
+                      <td
+                        className={`px-6 py-3 text-center ${volunteer.clockedIn ? "text-green-500" : "text-red-500"}`}
+                      >
+                        {volunteer.clockedIn ? "On shift" : "Off Shift"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              )}
+            </table>
+          </div>
         </div>
       )}
       {allVolunteers && adminVolunteer && viewTimesheet && (

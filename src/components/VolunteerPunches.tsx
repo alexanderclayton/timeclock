@@ -68,29 +68,34 @@ export const VolunteerPunches = ({
   }, [allPunches]);
 
   return (
-    <>
+    <div className="h-64 w-full overflow-auto">
       {allPunches.map((punch, idx) => (
-        <tr key={idx} className="border-b border-gray-200 hover:bg-blue-100">
-          <th className="px-6 py-3 text-center">
+        <tr
+          key={idx}
+          className="flex w-full flex-1 justify-between border-b border-gray-200 hover:bg-blue-100"
+        >
+          <th className="w-1/4 px-6 py-3 text-center">
             {handleTimestamp(punch.clockIn).toDateString()}
           </th>
-          <td className="px-6 py-3 text-center">{punchTime(punch.clockIn)}</td>
+          <td className="w-1/4 px-6 py-3 text-center">
+            {punchTime(punch.clockIn)}
+          </td>
           {punch.clockOut ? (
-            <td className="px-6 py-3 text-center">
+            <td className="w-1/4 px-6 py-3 text-center">
               {punchTime(punch.clockOut)}
             </td>
           ) : (
-            <td className="px-6 py-3 text-center">On Shift</td>
+            <td className="w-1/4 px-6 py-3 text-center">On Shift</td>
           )}
           {punch.clockOut ? (
-            <td className="px-6 py-3 text-center">
+            <td className="w-1/4 px-6 py-3 text-center">
               {shiftHours(punch.clockIn, punch.clockOut).string}
             </td>
           ) : (
-            <td className="px-6 py-3 text-center">On Shift</td>
+            <td className="w-1/4 px-6 py-3 text-center">On Shift</td>
           )}
         </tr>
       ))}
-    </>
+    </div>
   );
 };
