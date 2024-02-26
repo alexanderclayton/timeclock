@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
 import { TVolunteer } from "../types";
 import { getDocument } from "../firebase";
+import { VolunteerForm } from ".";
 
 interface IUpdateVolunteerProps {
-  updateVolunteer: string;
+  updateVolunteerId: string;
 }
 
-export const UpdateVolunteer = ({ updateVolunteer }: IUpdateVolunteerProps) => {
+export const UpdateVolunteer = ({
+  updateVolunteerId,
+}: IUpdateVolunteerProps) => {
   const [volunteer, setVolunteer] = useState<TVolunteer | undefined>(undefined);
 
   const fetchVolunteer = async () => {
-    const fetchedVolunteer = await getDocument<TVolunteer>("volunteers", updateVolunteer);
+    const fetchedVolunteer = await getDocument<TVolunteer>(
+      "volunteers",
+      updateVolunteerId,
+    );
     if (fetchedVolunteer) {
       setVolunteer({
         volunteerId: fetchedVolunteer.volunteerId,
@@ -28,10 +34,10 @@ export const UpdateVolunteer = ({ updateVolunteer }: IUpdateVolunteerProps) => {
   };
 
   useEffect(() => {
-    if (updateVolunteer !== undefined) {
+    if (updateVolunteerId !== undefined) {
       fetchVolunteer();
     }
-  }, [updateVolunteer]);
+  }, [updateVolunteerId]);
   return (
     <>
       {volunteer && (
