@@ -21,7 +21,7 @@ export const AddVolunteer = () => {
   // const [updateVolunteer, setUpdateVolunteer] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, id } = e.target;
+    const { id, value } = e.target;
     setVolunteer((prevVolunteer) => ({
       ...prevVolunteer,
       [id]: value,

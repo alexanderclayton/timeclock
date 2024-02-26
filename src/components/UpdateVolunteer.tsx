@@ -1,51 +1,60 @@
-import { useEffect, useState } from "react";
-import { TVolunteer } from "../types";
-import { getDocument } from "../firebase";
+import { useState } from "react";
+import { EEdits, TVolunteer } from "../types";
+import { VolunteerForm } from ".";
 
 interface IUpdateVolunteerProps {
-  updateVolunteerId: string;
+  updateVolunteer: TVolunteer;
+  setEditVolunteer: React.Dispatch<React.SetStateAction<EEdits>>;
 }
 
 export const UpdateVolunteer = ({
-  updateVolunteerId,
+  updateVolunteer,
+  setEditVolunteer,
 }: IUpdateVolunteerProps) => {
-  const [volunteer, setVolunteer] = useState<TVolunteer | undefined>(undefined);
+  const [updatedVolunteer, setUpdatedVolunteer] = useState<TVolunteer>({
+    volunteerId: updateVolunteer.volunteerId,
+    volunteerFirstName: updateVolunteer.volunteerFirstName,
+    volunteerLastName: updateVolunteer.volunteerLastName,
+    volunteerEmail: updateVolunteer.volunteerEmail,
+    volunteerPhone: updateVolunteer.volunteerPhone,
+    admin: updateVolunteer.admin,
+    clockedIn: updateVolunteer.clockedIn,
+    punchId: updateVolunteer.punchId,
+  });
 
-  const fetchVolunteer = async () => {
-    const fetchedVolunteer = await getDocument<TVolunteer>(
-      "volunteers",
-      updateVolunteerId,
-    );
-    if (fetchedVolunteer) {
-      setVolunteer({
-        volunteerId: fetchedVolunteer.volunteerId,
-        volunteerFirstName: fetchedVolunteer.volunteerFirstName,
-        volunteerLastName: fetchedVolunteer.volunteerLastName,
-        volunteerEmail: fetchedVolunteer.volunteerEmail,
-        volunteerPhone: fetchedVolunteer.volunteerPhone,
-        admin: fetchedVolunteer.admin,
-        clockedIn: fetchedVolunteer.clockedIn,
-        punchId: fetchedVolunteer.punchId,
-      });
-    } else {
-      console.log("unable to fetch volunteer");
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setUpdatedVolunteer((prevVolunteer) => ({
+      ...prevVolunteer,
+      [id]: value,
+    }));
   };
 
-  useEffect(() => {
-    if (updateVolunteerId !== undefined) {
-      fetchVolunteer();
-    }
-  }, [updateVolunteerId]);
+  const formSubmit = () => {
+    console.log("HI");
+  };
+
   return (
-    <>
-      {volunteer && (
-        <div className="bg-green-100">
-          {volunteer.punchId} {volunteer.clockedIn} {volunteer.volunteerEmail}{" "}
-          {volunteer.volunteerFirstName} {volunteer.volunteerId}{" "}
-          {volunteer.volunteerLastName} {volunteer.volunteerPhone}
-        </div>
-      )}
-    </>
+    <div className="h-full w-full">
+      <div className="h-[80%] w-full">
+        {updatedVolunteer && (
+          <VolunteerForm
+            legend="Update Volunteer"
+            formSubmit={formSubmit}
+            formChange={handleChange}
+            volunteer={updatedVolunteer}
+            submit="Update Volunteer"
+          />
+        )}
+      </div>
+      <div className="h-full w-full p-4">
+        <button
+          className="w-full cursor-pointer rounded-md bg-red-500 py-2 font-semibold text-white transition duration-300 hover:bg-red-700"
+          onClick={() => setEditVolunteer(EEdits.None)}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
   );
 };

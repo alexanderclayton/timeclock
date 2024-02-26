@@ -1,21 +1,41 @@
 import { useState, useEffect } from "react";
-import { TVolunteer } from "../types";
+import { EEdits, TVolunteer } from "../types";
 import { getDocuments } from "../firebase";
 
 interface IAllVolunteersProps {
-  setAdminVolunteerId: React.Dispatch<React.SetStateAction<string>>;
+  setAdminVolunteer: React.Dispatch<
+    React.SetStateAction<TVolunteer | undefined>
+  >;
+  editVolunteer: EEdits;
+  setEditVolunteer: React.Dispatch<React.SetStateAction<EEdits>>;
 }
 
-export const AllVolunteers = ({ setAdminVolunteerId }: IAllVolunteersProps) => {
+export const AllVolunteers = ({
+  setAdminVolunteer,
+  editVolunteer,
+  setEditVolunteer,
+}: IAllVolunteersProps) => {
   const [allVolunteers, setAllVolunteers] = useState<TVolunteer[] | undefined>(
     undefined,
   );
 
+  const handleVolunteerSelect = async (volunteer: TVolunteer) => {
+    setAdminVolunteer({
+      volunteerId: volunteer.volunteerId,
+      volunteerFirstName: volunteer.volunteerFirstName,
+      volunteerLastName: volunteer.volunteerLastName,
+      volunteerEmail: volunteer.volunteerEmail,
+      volunteerPhone: volunteer.volunteerPhone,
+      admin: volunteer.admin,
+      clockedIn: volunteer.clockedIn,
+      punchId: volunteer.punchId,
+    });
+    setEditVolunteer(EEdits.None);
+  };
+
   useEffect(() => {
-    if (!allVolunteers) {
-      getDocuments("volunteers", setAllVolunteers);
-    }
-  }, []);
+    getDocuments("volunteers", setAllVolunteers);
+  }, [editVolunteer]);
   return (
     <>
       {allVolunteers && (
@@ -25,7 +45,7 @@ export const AllVolunteers = ({ setAdminVolunteerId }: IAllVolunteersProps) => {
             {allVolunteers.map((volunteer, idx) => (
               <div
                 key={idx}
-                onClick={() => setAdminVolunteerId(volunteer.volunteerId)}
+                onClick={() => handleVolunteerSelect(volunteer)}
                 className="pl-4 hover:cursor-pointer hover:bg-purple-200"
               >
                 {volunteer.volunteerFirstName} {volunteer.volunteerLastName}
@@ -34,7 +54,12 @@ export const AllVolunteers = ({ setAdminVolunteerId }: IAllVolunteersProps) => {
               </div>
             ))}
           </div>
-          <button className="h-[15%] text-green-500">Add Volunteer</button>
+          <button
+            onClick={() => setEditVolunteer(EEdits.Add)}
+            className="h-[15%] text-green-500"
+          >
+            Add Volunteer
+          </button>
         </div>
       )}
     </>
