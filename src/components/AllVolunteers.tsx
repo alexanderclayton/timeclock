@@ -3,12 +3,10 @@ import { TVolunteer } from "../types";
 import { getDocuments } from "../firebase";
 
 interface IAllVolunteersProps {
-  setUpdateVolunteerId: React.Dispatch<React.SetStateAction<string>>;
+  setAdminVolunteerId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const AllVolunteers = ({
-  setUpdateVolunteerId,
-}: IAllVolunteersProps) => {
+export const AllVolunteers = ({ setAdminVolunteerId }: IAllVolunteersProps) => {
   const [allVolunteers, setAllVolunteers] = useState<TVolunteer[] | undefined>(
     undefined,
   );
@@ -21,17 +19,22 @@ export const AllVolunteers = ({
   return (
     <>
       {allVolunteers && (
-        <div>
-          <h2 className="text-2xl">All Volunteers</h2>
-          {allVolunteers.map((volunteer, idx) => (
-            <div
-              key={idx}
-              onClick={() => setUpdateVolunteerId(volunteer.volunteerId)}
-            >
-              {volunteer.volunteerFirstName} {volunteer.volunteerLastName}{" "}
-              {volunteer.volunteerId}
-            </div>
-          ))}
+        <div className="flex h-[80%] flex-col items-center">
+          <h2 className="h-[15%] text-2xl">All Volunteers</h2>
+          <div className="h-[70%] w-[90%] overflow-y-auto rounded bg-gray-100 p-4 shadow">
+            {allVolunteers.map((volunteer, idx) => (
+              <div
+                key={idx}
+                onClick={() => setAdminVolunteerId(volunteer.volunteerId)}
+                className="pl-4 hover:cursor-pointer hover:bg-purple-200"
+              >
+                {volunteer.volunteerFirstName} {volunteer.volunteerLastName}
+                {" - "}
+                {volunteer.volunteerId}
+              </div>
+            ))}
+          </div>
+          <button className="h-[15%] text-green-500">Add Volunteer</button>
         </div>
       )}
     </>
