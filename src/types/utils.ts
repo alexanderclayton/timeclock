@@ -3,3 +3,9 @@ export enum ETabs {
     Timesheet = "Timesheet",
     Settings = "Settings"
 }
+
+export enum EEdits {
+    None = "none",
+    Add = "add",
+    Update = "update"
+}
