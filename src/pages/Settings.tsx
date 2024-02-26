@@ -3,6 +3,7 @@ import { VolunteerIDForm } from "../components/VolunteerIDForm";
 import { getDocument } from "../firebase";
 import { TVolunteer } from "../types";
 import { EMessageType } from ".";
+import { AdminSettings } from "../components/AdminSettings";
 
 export const Settings = () => {
   const [formId, setFormId] = useState("");
@@ -69,7 +70,7 @@ export const Settings = () => {
             </p>
           </div>
         )}
-        {volunteer?.admin && <div>Hiiiiii</div>}
+        {volunteer?.admin && <AdminSettings />}
       </div>
     </div>
   );
