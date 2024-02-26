@@ -1,14 +1,20 @@
 import { useState } from "react";
-import { UpdateVolunteer } from "./UpdateVolunteer";
 import { AllVolunteers } from "./AllVolunteers";
+import { AdminVolunteer } from "./AdminVolunteer";
 
 export const AdminSettings = () => {
-  const [updateVolunteerId, setUpdateVolunteerId] = useState("");
+  const [adminVolunteerId, setAdminVolunteerId] = useState("");
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center">
-      <h1 className="text-4xl">Volunteers Settings</h1>
-      <AllVolunteers setUpdateVolunteerId={setUpdateVolunteerId} />
-      <UpdateVolunteer updateVolunteerId={updateVolunteerId} />
+    <div className="flex h-full w-full flex-col p-8">
+      <h1 className="h-[20%] text-4xl">Volunteers Settings</h1>
+      <div className="flex flex-1">
+        <div className="w-1/2">
+          <AllVolunteers setAdminVolunteerId={setAdminVolunteerId} />
+        </div>
+        <div className="w-1/2">
+          <AdminVolunteer volunteerId={adminVolunteerId} />
+        </div>
+      </div>
     </div>
   );
 };
