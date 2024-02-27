@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { EEdits, TVolunteer } from "../types";
 import { VolunteerForm } from ".";
+import { updateAllDocument } from "../firebase";
 
 interface IUpdateVolunteerProps {
   updateVolunteer: TVolunteer;
@@ -30,8 +31,14 @@ export const UpdateVolunteer = ({
     }));
   };
 
-  const formSubmit = () => {
-    console.log("HI");
+  const formSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await updateAllDocument<TVolunteer>(
+      "volunteers",
+      updatedVolunteer.volunteerId,
+      updatedVolunteer,
+    );
+    setEditVolunteer(EEdits.None);
   };
 
   return (

@@ -42,10 +42,10 @@ export const Timesheets = () => {
   };
 
   return (
-    <div className="h-full w-full rounded-3xl bg-amber-400 p-4">
-      <div className="flex h-full w-full items-center justify-center rounded-2xl bg-gray-100">
+    <div className="flex h-full w-full rounded-3xl bg-amber-400 p-4">
+      <div className="flex h-full w-full flex-col items-center justify-around rounded-2xl bg-gray-100 p-8">
         {!volunteer && (
-          <div>
+          <div className="flex h-full w-full flex-col items-center justify-center">
             <VolunteerIDForm
               formSubmit={formSubmit}
               id={volunteerId}

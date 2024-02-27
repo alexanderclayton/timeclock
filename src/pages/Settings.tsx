@@ -56,7 +56,7 @@ export const Settings = () => {
     <div className="h-full w-full rounded-3xl bg-purple-900 p-4">
       <div className="flex h-full w-full items-center justify-center rounded-2xl bg-gray-100">
         {!volunteer && (
-          <div className="flex flex-col">
+          <div className="flex h-full w-full flex-col items-center justify-center">
             <VolunteerIDForm
               formSubmit={formSubmit}
               id={formId}
