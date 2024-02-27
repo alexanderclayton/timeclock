@@ -1,6 +1,7 @@
 import { doc, collection, query, where, updateDoc, getDoc, getDocs, WithFieldValue, DocumentData, setDoc, deleteField, FieldValue, deleteDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import { FirebaseError } from "firebase/app";
+
 export const addDocument = async<T extends WithFieldValue<DocumentData>>(
     collectionName: string,
     documentName: string,
@@ -45,6 +46,24 @@ export const updateDocument = async<T>(
             }
             console.log("clocked in/out")
         }
+    } catch (error: unknown) {
+        if (error instanceof FirebaseError) {
+            console.error("Firebase Error:", error.message)
+        } else {
+            console.error("Unknown error:", error)
+        }
+    }
+}
+
+export const updateAllDocument = async <T extends DocumentData>(
+    collectionName: string,
+    documentName: string,
+    documentContent: T
+) => {
+    try {
+        const docRef = doc(db, collectionName, documentName)
+        await updateDoc(docRef, documentContent)
+        console.log(`Updated ${collectionName}`);
     } catch (error: unknown) {
         if (error instanceof FirebaseError) {
             console.error("Firebase Error:", error.message)

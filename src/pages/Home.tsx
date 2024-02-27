@@ -109,7 +109,7 @@ export const Home = () => {
   setInterval(updateTime, 1000);
 
   return (
-    <div className="flex h-full rounded-3xl bg-green-600 p-4">
+    <div className="flex h-full w-full rounded-3xl bg-green-600 p-4">
       <div className="flex h-full w-full flex-col items-center justify-around rounded-2xl bg-gray-100 p-8">
         <h1 className="text-6xl">{time}</h1>
         <VolunteerIDForm

@@ -3,9 +3,7 @@ import { EEdits, TVolunteer } from "../types";
 import { getDocuments } from "../firebase";
 
 interface IAllVolunteersProps {
-  setAdminVolunteer: React.Dispatch<
-    React.SetStateAction<TVolunteer | undefined>
-  >;
+  setAdminVolunteer: React.Dispatch<React.SetStateAction<string>>;
   editVolunteer: EEdits;
   setEditVolunteer: React.Dispatch<React.SetStateAction<EEdits>>;
 }
@@ -20,17 +18,7 @@ export const AllVolunteers = ({
   );
 
   const handleVolunteerSelect = async (volunteer: TVolunteer) => {
-    setAdminVolunteer({
-      volunteerId: volunteer.volunteerId,
-      volunteerFirstName: volunteer.volunteerFirstName,
-      volunteerLastName: volunteer.volunteerLastName,
-      volunteerEmail: volunteer.volunteerEmail,
-      volunteerPhone: volunteer.volunteerPhone,
-      admin: volunteer.admin,
-      clockedIn: volunteer.clockedIn,
-      punchId: volunteer.punchId,
-    });
-    setEditVolunteer(EEdits.None);
+    setAdminVolunteer(volunteer.volunteerId);
   };
 
   useEffect(() => {
